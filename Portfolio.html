@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mohamed Ismail — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:         #10172d;
+      --surface:    #15192b;
+      --surface-2:  #141930;
+      --accent:     #4F8EF7;
+      --accent-dim: rgba(42, 89, 169, 0.13);
+      --accent-2:   #7C5CBF;
+      --text:       #E0E4F0;
+      --muted:      #7A80A0;
+      --border:     #1E2438;
+      --display:    'Space Grotesk', sans-serif;
+      --body:       'Inter', sans-serif;
+      --mono:       'JetBrains Mono', monospace;
+    }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--body);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ─────────────────────────────── */
+    nav {
+      position: fixed; top:0; left:0; right:0; z-index:100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.15rem 2.5rem;
+      background: rgba(8,11,20,.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-brand {
+      font-family: var(--mono); font-size:.85rem;
+      color: var(--accent); letter-spacing:.06em;
+    }
+    .nav-links { display:flex; gap:2rem; list-style:none; }
+    .nav-links a {
+      color: var(--muted); text-decoration:none;
+      font-size:.82rem; letter-spacing:.04em;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── HERO ────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction:column; justify-content:center;
+      padding: 7rem 2.5rem 4rem;
+      max-width: 920px; margin: 0 auto;
+    }
+    .eyebrow {
+      font-family: var(--mono); font-size:.78rem;
+      color: var(--accent); letter-spacing:.12em; text-transform:uppercase;
+      margin-bottom: 1.5rem;
+      opacity:0; animation: fadeUp .55s .15s forwards;
+    }
+    .hero-title {
+      font-family: var(--display);
+      font-size: clamp(3rem,8.5vw,6.2rem);
+      font-weight:700; line-height:1.04; letter-spacing:-.03em;
+      color: var(--text); margin-bottom:1.5rem;
+      opacity:0; animation: fadeUp .55s .35s forwards;
+    }
+    .hero-title .a { color: var(--accent); }
+    .hero-sub {
+      font-size:1.05rem; color: var(--muted);
+      max-width:560px; line-height:1.8; margin-bottom:2.5rem;
+      opacity:0; animation: fadeUp .55s .55s forwards;
+    }
+    .cta-row {
+      display:flex; gap:1rem; flex-wrap:wrap;
+      opacity:0; animation: fadeUp .55s .72s forwards;
+    }
+    .btn {
+      display:inline-flex; align-items:center; gap:.45rem;
+      padding:.72rem 1.45rem; border-radius:8px;
+      font-family:var(--body); font-size:.88rem; font-weight:500;
+      text-decoration:none; cursor:pointer; border:none;
+      transition: transform .2s, background .2s, border-color .2s, color .2s;
+    }
+    .btn-pri  { background:var(--accent); color:#fff; }
+    .btn-pri:hover  { background:#6B9EF9; transform:translateY(-2px); }
+    .btn-ghost { background:transparent; color:var(--text); border:1px solid var(--border); }
+    .btn-ghost:hover { border-color:var(--accent); color:var(--accent); transform:translateY(-2px); }
+
+    /* ── SECTIONS ────────────────────────── */
+    section { padding:5rem 2.5rem; max-width:920px; margin:0 auto; }
+    .divider { width:100%; height:1px; background:var(--border); max-width:920px; margin:0 auto; }
+    .eyebrow-s {
+      font-family:var(--mono); font-size:.72rem;
+      color:var(--accent); letter-spacing:.14em; text-transform:uppercase;
+      margin-bottom:.65rem;
+    }
+    .sec-title {
+      font-family:var(--display); font-size:clamp(1.75rem,4vw,2.4rem);
+      font-weight:700; color:var(--text); margin-bottom:2.4rem;
+      letter-spacing:-.025em;
+    }
+
+    /* ── ABOUT ───────────────────────────── */
+    .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:2rem; }
+    .about-text { color:var(--muted); font-size:.93rem; line-height:1.85; }
+    .about-text p+p { margin-top:1rem; }
+    .stat-cards { display:flex; flex-direction:column; gap:1rem; }
+    .stat-card {
+      background:var(--surface); border:1px solid var(--border);
+      border-radius:12px; padding:1.25rem 1.5rem;
+    }
+    .stat-val {
+      font-family:var(--display); font-size:1.6rem;
+      font-weight:700; color:var(--accent); line-height:1.2;
+    }
+    .stat-lbl { font-size:.78rem; color:var(--muted); margin-top:.25rem; }
+
+    /* ── GOALS ───────────────────────────── */
+    .goal-card {
+      background:var(--surface); border:1px solid var(--border);
+      border-radius:16px; padding:2rem; margin-bottom:1.25rem;
+    }
+    .goal-card h3 {
+      font-family:var(--display); font-size:1.1rem; font-weight:600;
+      color:var(--accent); margin-bottom:.6rem;
+    }
+    .goal-card p { color:var(--muted); font-size:.93rem; line-height:1.8; }
+
+    /* ── EDUCATION ───────────────────────── */
+    .timeline { display:flex; flex-direction:column; gap:1.25rem; }
+    .timeline-item {
+      display:grid; grid-template-columns:140px 1fr; gap:1.5rem;
+      background:var(--surface); border:1px solid var(--border);
+      border-radius:14px; padding:1.5rem;
+    }
+    .timeline-date {
+      font-family:var(--mono); font-size:.78rem; color:var(--accent);
+      letter-spacing:.04em;
+    }
+    .timeline-content h4 {
+      font-family:var(--display); font-size:1.02rem; font-weight:600;
+      color:var(--text); margin-bottom:.35rem;
+    }
+    .timeline-content p { color:var(--muted); font-size:.86rem; line-height:1.7; }
+    .timeline-item.current { border-color:rgba(79,142,247,.45); }
+    .timeline-item.current .timeline-content h4::after {
+      content:'In progress'; font-family:var(--mono); font-size:.65rem;
+      color:var(--accent); background:var(--accent-dim);
+      padding:.18rem .5rem; border-radius:5px; margin-left:.6rem;
+      letter-spacing:.04em; vertical-align:middle;
+    }
+    @media(max-width:640px){
+      .timeline-item { grid-template-columns:1fr; gap:.5rem; }
+    }
+
+    /* ── SKILLS ──────────────────────────── */
+    .skill-groups { display:flex; flex-direction:column; gap:2.5rem; }
+    .group-label {
+      font-family:var(--display); font-size:.92rem; font-weight:600;
+      color:var(--text); margin-bottom:.9rem;
+      display:flex; align-items:center; gap:.8rem;
+    }
+    .group-label::after { content:''; flex:1; height:1px; background:var(--border); }
+    .tags { display:flex; flex-wrap:wrap; gap:.55rem; }
+    .tag {
+      font-family:var(--mono); font-size:.72rem;
+      padding:.32rem .72rem; border-radius:6px;
+      background:var(--surface-2); color:var(--muted);
+      border:1px solid var(--border);
+      transition: border-color .2s, color .2s, background .2s;
+    }
+    .tag:hover, .tag.hi {
+      border-color:rgba(79,142,247,.45);
+      color:var(--accent); background:var(--accent-dim);
+    }
+
+    /* ── PROJECTS ────────────────────────── */
+    .project-grid { display:flex; flex-direction:column; gap:1.5rem; }
+    .project-card {
+      background:var(--surface); border:1px solid var(--border);
+      border-radius:16px; padding:2rem;
+      position:relative; overflow:hidden;
+      transition: border-color .3s, transform .3s;
+    }
+    .project-card:hover { border-color:var(--accent); transform:translateY(-4px); }
+    .project-card::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:2px;
+      background:linear-gradient(90deg, var(--accent), var(--accent-2));
+    }
+    .proj-head {
+      display:flex; justify-content:space-between; align-items:flex-start;
+      margin-bottom:1rem; gap:1rem;
+    }
+    .proj-name {
+      font-family:var(--display); font-size:1.25rem;
+      font-weight:700; color:var(--text);
+    }
+    .proj-link {
+      font-family:var(--mono); font-size:.75rem; color:var(--muted);
+      border:1px solid var(--border); padding:.3rem .65rem;
+      border-radius:6px; text-decoration:none; white-space:nowrap;
+      transition: border-color .2s, color .2s;
+    }
+    .proj-link:hover { border-color:var(--accent); color:var(--accent); }
+    .proj-img {
+      width:100%; border-radius:10px; border:1px solid var(--border);
+      margin-bottom:1.4rem; display:block;
+    }
+    .proj-meta {
+      font-family:var(--mono); font-size:.78rem; color:var(--muted);
+      margin-bottom:1rem; line-height:1.8;
+    }
+    .proj-meta b { color:var(--text); }
+    .proj-desc { color:var(--muted); font-size:.9rem; line-height:1.75; margin-bottom:1.4rem; }
+
+    /* ── BEYOND CODE ─────────────────────── */
+    .beyond-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem; }
+    .beyond-card {
+      background:var(--surface); border:1px solid var(--border);
+      border-radius:14px; padding:1.6rem;
+    }
+    .beyond-card h4 {
+      font-family:var(--display); font-size:1rem; font-weight:600;
+      color:var(--text); margin-bottom:.5rem;
+    }
+    .beyond-card p { color:var(--muted); font-size:.85rem; line-height:1.7; }
+
+    /* ── CONTACT ─────────────────────────── */
+    .contact-cards { display:flex; gap:1rem; flex-wrap:wrap; }
+    .contact-card {
+      display:flex; align-items:center; gap:.7rem;
+      background:var(--surface); border:1px solid var(--border);
+      border-radius:12px; padding:.9rem 1.4rem;
+      text-decoration:none; color:var(--muted); font-size:.88rem;
+      transition: border-color .2s, color .2s, transform .2s;
+    }
+    .contact-card:hover { border-color:var(--accent); color:var(--accent); transform:translateY(-2px); }
+    .contact-card svg { width:17px; height:17px; flex-shrink:0; }
+
+    /* ── FOOTER ──────────────────────────── */
+    footer {
+      text-align:center; padding:2rem;
+      color:var(--muted); font-size:.76rem;
+      font-family:var(--mono);
+      border-top:1px solid var(--border);
+    }
+
+    /* ── ANIMATIONS ──────────────────────── */
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(22px); }
+      to   { opacity:1; transform:translateY(0);    }
+    }
+
+    .reveal { opacity:0; transform:translateY(22px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.vis { opacity:1; transform:none; }
+
+    /* ── RESPONSIVE ──────────────────────── */
+    @media(max-width:640px){
+      nav { padding:1rem 1.25rem; }
+      .nav-links { gap:1rem; }
+      .hero, section { padding-left:1.25rem; padding-right:1.25rem; }
+      .about-grid { grid-template-columns:1fr; }
+      .beyond-grid { grid-template-columns:1fr; }
+      .proj-head { flex-direction:column; }
+    }
+    @media(prefers-reduced-motion:reduce){
+      *,*::before,*::after { animation:none!important; transition:none!important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <span class="nav-brand">Mohamed Ismail</span>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#beyond">Beyond Code</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="eyebrow">Computer Engineering (Hons) · APU, Malaysia</div>
+  <img src="Profile.jpeg" alt="Mohamed Ismail"
+     style="
+       width:170px;
+       height:170px;
+       border-radius:50%;
+       object-fit:cover;
+       border:2px solid var(--border);
+       margin-bottom:1.8rem;
+     ">
+  <h1 class="hero-title">
+    Mohamed<br><span class="a">Ismail</span>
+  </h1>
+  <p class="hero-sub">
+    Engineer in the making, from Mali to Malaysia. Building a foundation in
+    systems, networks, and security — while keeping an eye on the
+    entrepreneurial side of technology.
+  </p>
+  <div class="cta-row">
+    <a href="#projects" class="btn btn-pri">
+      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+      View Projects
+    </a>
+    <a href="mailto:mohamedismaelmaiga2000@gmail.com" class="btn btn-ghost">Contact Me</a>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ── ABOUT ── -->
+<section id="about">
+  <div class="reveal">
+    <div class="eyebrow-s">// 01 — about</div>
+    <h2 class="sec-title">Who I am</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I'm a Computer Engineering (Honours) student at Asia Pacific University of Technology &amp; Innovation (APU) in Malaysia, originally from Mali. I'm building a strong foundation in systems programming, computer networks, and cybersecurity.</p>
+        <p>Studying abroad has pushed me to adapt fast, stay disciplined, and learn independently — qualities I bring to every project I take on. I'm curious by nature, constantly experimenting with new tools and tackling problems from first principles.</p>
+        <p>Beyond the technical track, I'm drawn to business and entrepreneurship. I'm interested in how engineering skills can be turned into solutions that create real value — not just for systems, but for businesses and communities.</p>
+        <p>My goal is to become a highly skilled computer engineer with expertise in software systems, cybersecurity, and emerging technologies — continuously improving, and eventually building things that matter.</p>
+      </div>
+      <div class="stat-cards">
+        <div class="stat-card">
+          <div class="stat-val">APU</div>
+          <div class="stat-lbl">Asia Pacific University of Technology &amp; Innovation, Malaysia</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val">🇲🇱 Mali</div>
+          <div class="stat-lbl">Originally from Mali, studying in Malaysia</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val">BEng (Hons)</div>
+          <div class="stat-lbl">Computer Engineering — in progress</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── EDUCATION ── -->
+<section id="education">
+  <div class="reveal">
+    <div class="eyebrow-s">// 02 — education</div>
+    <h2 class="sec-title">Academic journey</h2>
+    <div class="timeline">
+      <div class="timeline-item current">
+        <div class="timeline-date">Jul 2025 — Jun 2029</div>
+        <div class="timeline-content">
+          <h4>BEng (Hons) Computer Engineering</h4>
+          <p>Asia Pacific University of Technology &amp; Innovation (APU), Malaysia. A 4-year programme covering systems programming, computer networks, operating systems, and cybersecurity fundamentals.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">Year 1 · Completed</div>
+        <div class="timeline-content">
+          <h4>Foundations</h4>
+          <p>Built core programming skills in C and Python, introduced to data structures, networking basics, and Linux environments.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">Year 2 · Starting Jul 2026</div>
+        <div class="timeline-content">
+          <h4>Going deeper</h4>
+          <p>Moving into more advanced systems, networking, and security coursework, alongside continued personal projects.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── SKILLS ── -->
+<section id="skills">
+  <div class="reveal">
+    <div class="eyebrow-s">// 03 — skills</div>
+    <h2 class="sec-title">What I know</h2>
+    <div class="skill-groups">
+
+      <div>
+        <div class="group-label">Programming &amp; Systems</div>
+        <div class="tags">
+          <span class="tag hi">C / C++</span>
+          <span class="tag hi">Python</span>
+          <span class="tag">HTML</span>
+          <span class="tag">Linux</span>
+          <span class="tag hi">Git &amp; GitHub</span>
+          <span class="tag">Computer Networking</span>
+          <span class="tag">Operating Systems</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="group-label">Areas of Interest</div>
+        <div class="tags">
+          <span class="tag hi">Cybersecurity</span>
+          <span class="tag hi">Software Engineering</span>
+          <span class="tag">Networks &amp; Systems</span>
+          <span class="tag">Artificial Intelligence</span>
+          <span class="tag">Cloud Computing</span>
+          <span class="tag hi">Entrepreneurship</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="group-label">Tools &amp; Environments</div>
+        <div class="tags">
+          <span class="tag hi">VS Code</span>
+          <span class="tag hi">Linux Terminal</span>
+          <span class="tag hi">GitHub</span>
+          <span class="tag">Cisco Packet Tracer</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="group-label">Strengths</div>
+        <div class="tags">
+          <span class="tag">Curious</span>
+          <span class="tag">Disciplined</span>
+          <span class="tag">Ambitious</span>
+          <span class="tag">Adaptable</span>
+          <span class="tag">Self-Taught Learner</span>
+          <span class="tag">English</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── PROJECTS ── -->
+<section id="projects">
+  <div class="reveal">
+    <div class="eyebrow-s">// 04 — projects</div>
+    <h2 class="sec-title">What I've built</h2>
+    <div class="project-grid">
+      <div class="project-card">
+        <div class="proj-head">
+          <div class="proj-name">Enterprise Network Design — NetVerse Dynamics</div>
+        </div>
+        <img class="proj-img" src="images/netverse-wan-topology.png" alt="NetVerse Dynamics multi-branch network topology in Cisco Packet Tracer">
+        <div class="proj-meta">
+          <b>Group project</b> · Introduction to Networking (CT043-3-1), APU<br>
+          <b>My role:</b> Designed the Shah Alam and Ipoh branch networks, IP addressing schemes, and contributed to the WAN topology and OSPF justification
+        </div>
+        <p class="proj-desc">
+          Designed and simulated a nationwide enterprise network in Cisco Packet Tracer for a fictional company operating across four Malaysian cities (Shah Alam, Ipoh, Cyberjaya, Johor Bahru). The network combines star, bus, and extended star topologies at branch level, with structured IP addressing (FLSM and VLSM), VLAN segmentation, and a hybrid ring/partial-mesh WAN linking all branches. Routing was implemented with OSPF (single area) so all branches exchange routes dynamically, with full IoT integration (smart devices, sensors, cameras) per branch.
+        </p>
+        <div class="tags">
+          <span class="tag hi">Cisco Packet Tracer</span>
+          <span class="tag hi">OSPF</span>
+          <span class="tag">Subnetting (FLSM/VLSM)</span>
+          <span class="tag">VLANs</span>
+          <span class="tag">Network Topology Design</span>
+          <span class="tag">IP Addressing</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="proj-head">
+          <div class="proj-name">Shah Alam Branch — Star Topology</div>
+        </div>
+        <img class="proj-img" src="images/shah-alam-topology.png" alt="Shah Alam branch star topology in Cisco Packet Tracer">
+        <p class="proj-desc">
+          A closer look at the Shah Alam branch I designed within the NetVerse Dynamics network above: a star topology connecting the CEO Room, Server Room, Reception Room, and Office Room to a central router, each on its own /24 subnet (192.168.20.x – 192.168.23.x). The design integrates IoT devices (smart AC, lighting, RFID readers, smart appliances) through home gateways and access points alongside traditional PCs, laptops, printers, and servers.
+        </p>
+        <div class="tags">
+          <span class="tag hi">Cisco Packet Tracer</span>
+          <span class="tag">Star Topology</span>
+          <span class="tag">Subnetting</span>
+          <span class="tag">IoT Integration</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="proj-head">
+          <div class="proj-name">Hospital Management System</div>
+          <a href="https://github.com/mohamedismaelmaiga2000-crypto/Hospital-Management-System" target="_blank" rel="noopener" class="proj-link">↗ GitHub</a>
+        </div>
+        <p class="proj-desc">
+          A console-based hospital management system developed in C. The system handles patient records, admissions, and core hospital workflows — demonstrating proficiency with low-level memory management, structs, and file I/O.
+        </p>
+        <div class="tags">
+          <span class="tag hi">C Language</span>
+          <span class="tag">File I/O</span>
+          <span class="tag">Data Structures</span>
+          <span class="tag">Systems Programming</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="proj-head">
+          <div class="proj-name">Flask Auth API</div>
+          <a href="https://github.com/mohamedismaelmaiga2000-crypto/flask-auth-api" target="_blank" rel="noopener" class="proj-link">↗ GitHub</a>
+        </div>
+        <p class="proj-desc">
+          A simple authentication API built with Flask, using bcrypt for secure password hashing and SQLite for lightweight data storage. Covers core concepts behind user registration, login, and credential security in web backends.
+        </p>
+        <div class="tags">
+          <span class="tag hi">Python</span>
+          <span class="tag hi">Flask</span>
+          <span class="tag">bcrypt</span>
+          <span class="tag">SQLite</span>
+          <span class="tag">Authentication</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── BEYOND CODE ── -->
+<section id="beyond">
+  <div class="reveal">
+    <div class="eyebrow-s">// 05 — beyond code</div>
+    <h2 class="sec-title">Outside the terminal</h2>
+    <div class="beyond-grid">
+      <div class="beyond-card">
+        <h4>Training</h4>
+        <p>Regular strength training, with a growing focus on cardio and overall conditioning.</p>
+      </div>
+      <div class="beyond-card">
+        <h4>Personal Growth</h4>
+        <p>Working on leadership, confidence, and charisma — discipline off-screen feeds discipline on-screen.</p>
+      </div>
+      <div class="beyond-card">
+        <h4>Entrepreneurial Mindset</h4>
+        <p>Always thinking about how technical skills can translate into real-world value and business opportunities.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ── CONTACT ── -->
+<section id="contact">
+  <div class="reveal">
+    <div class="eyebrow-s">// 06 — contact</div>
+    <h2 class="sec-title">Get in touch</h2>
+    <p style="color:var(--muted); margin-bottom:2rem; font-size:.93rem; max-width:480px; line-height:1.8;">
+      Open to internship opportunities, collaborations, and connecting with other engineers. Don't hesitate to reach out!
+    </p>
+    <div class="contact-cards">
+
+      <a href="mailto:mohamedismaelmaiga2000@gmail.com" class="contact-card">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
+        mohamedismaelmaiga2000@gmail.com
+      </a>
+
+      <a href="https://www.linkedin.com/in/mohamed-isma%C3%AFl-ma%C3%AFga-949b36346" target="_blank" rel="noopener" class="contact-card">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        LinkedIn
+      </a>
+
+      <a href="https://github.com/mohamedismaelmaiga2000-crypto" target="_blank" rel="noopener" class="contact-card">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+        GitHub
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>© 2025 Mohamed Ismail — Built from Malaysia 🇲🇾</footer>
+
+<script>
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('vis'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>
